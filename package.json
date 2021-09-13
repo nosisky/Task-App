@@ -1,0 +1,40 @@
+{
+  "name": "task-app",
+  "version": "0.1.0",
+  "description": "Task Application",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nosisky/Task-App.git"
+  },
+  "author": "Abdulrasaq Nasirudeen <nosisky@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.7",
+    "morgan": "^1.9.0",
+    "q": "^1.5.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.6",
+    "babel-preset-node6": "^11.0.0",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "mocha": "^5.2.0",
+    "mockgoose": "^7.3.5",
+    "nodemon": "^1.18.3"
+  },
+  "scripts": {
+    "start:dev": "NODE_ENV=dev nodemon server.js --exec \"npm run lint -s && babel-node\"",
+    "build": "babel src --out-dir build",
+    "lint": "./node_modules/.bin/eslint src",
+    "test": "NODE_ENV=test mocha --exit --timeout 30000 --compilers js:babel-register",
+    "test:watch": "NODE_ENV=test mocha --timeout 30000 --compilers js:babel-register"
+  }
+}
