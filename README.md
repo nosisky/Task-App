@@ -8,8 +8,6 @@
 - [Technologies](#technology)
 - [Installation and Setup](#installation)
 - [How to Contribute](#how-to-contribute)
-- [Frequently Asked Questions](#faqs)
-- [Support or New Features](#support-or-new-features)
 - [License](#license)
 - [TODO](#todo)
 
@@ -17,14 +15,14 @@
 
 Task App consists of the following features:
 
-### Authentication
+#### Authentication
 
 - It uses JSON Web Token (JWT) for authentication.
 - Token is generated on user login
 - Token is perpetually verified to check the state of the user if logged in or not.
 - User can only delete or edit their own tasks
 
-### Normal Users
+#### Users
 
 - Users can register
 - Users can log in
@@ -36,12 +34,8 @@ Task App consists of the following features:
 
 **Task App** makes use of a host of modern technologies. The core ones are:
 
-- ECMAScript 6: Also known as ES2015, this is a version of Javascript with
-  next-generation features like arrow functions, generators, enhanced object literals,
-  spread operators and more. The ES2015 is used in many areas of this project. See [this link](https://en.wikipedia.org/wiki/ECMAScript) for details.
-
 - NodeJS: Node.js is an open-source, cross-platform JavaScript run-time environment for executing JavaScript code on the server-side.
-  See [this link](https://en.wikipedia.org/wiki/Node.js) for details.
+  See [this link](https://en.wikipedia.org/wiki/Node.js) for details. Codes were also written in ES6.
 - ExpressJS: ExpressJS, is a web application framework for Node.js, It is designed for building web applications and APIs.
   see [this link](https://en.wikipedia.org/wiki/Express.js).
 - MongoDB & Mongoose: MongoDB is a source-available cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with optional schemas.
@@ -49,15 +43,15 @@ Task App consists of the following features:
 
 ## Installation
 
-> Git clone this repository
+- Git clone this repository
 
-> CD to the created directory
+- CD to the created directory
 
-> Rename .env.example file to .env and fill in your DB credentials and other available configuration like API_KEY_SECRET for JWT
+- Rename .env.example file to .env and fill in your DB credentials and other available configuration like API_KEY_SECRET for JWT
 
-> run `npm install`
+- run `npm install`
 
-> run `npm run start:dev` to start server
+- run `npm run start:dev` to start server
 
 ## API Routes
 
