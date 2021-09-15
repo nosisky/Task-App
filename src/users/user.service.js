@@ -1,42 +1,9 @@
-import Q from "q";
 import { generateSignedToken } from "../utils/helpers";
 import User from "./user.model";
 import omit from "lodash/omit";
 import bcrypt from "bcrypt";
 
 class UserService {
-  async getAll() {
-    const deferred = Q.defer();
-
-    User.find({}, (err, todos) => {
-      if (err) deferred.reject(err);
-      deferred.resolve(todos);
-    });
-
-    return deferred.promise;
-  }
-
-  async update(id, name, completed) {
-    const deferred = Q.defer();
-    const query = {};
-
-    if (name) query.name = name;
-    if (completed) query.completed = completed;
-
-    if (Object.keys(query).length > 0) {
-      User.update({ _id: id }, { $set: query }, (err, todo) => {
-        if (err) deferred.reject(err);
-
-        deferred.resolve(todo);
-      });
-    } else {
-      // reject promise if name and completed information is missing
-      deferred.reject({});
-    }
-
-    return deferred.promise;
-  }
-
   async create(userObject) {
     try {
       const newUser = new User({
