@@ -1,20 +1,26 @@
-import TaskController from "../task/task.controller";
+import TaskController from "../controllers/task.controller";
 import express from "express";
-import { validateCreateTask } from "../middleware/requestValidator";
-import { isLoggedIn } from "../middleware/authorization";
+import { validateCreateTask } from "../middlewares/requestValidator";
+import { isLoggedIn } from "../middlewares/authorization";
+import TaskService from "../services/task.service";
 
-const taskController = new TaskController();
+const taskService = new TaskService();
+const taskController = new TaskController(taskService);
 
 const taskRouter = express.Router();
 
 taskRouter
   .route("/")
-  .get(isLoggedIn, taskController.getAllTask)
-  .post(isLoggedIn, validateCreateTask, taskController.createTask);
+  .get(isLoggedIn, taskController.getAllTask.bind(taskController))
+  .post(
+    isLoggedIn,
+    validateCreateTask,
+    taskController.createTask.bind(taskController)
+  );
 
 taskRouter
   .route("/:id")
-  .delete(isLoggedIn, taskController.deleteTask)
-  .put(isLoggedIn, taskController.updateTask);
+  .delete(isLoggedIn, taskController.deleteTask.bind(taskController))
+  .put(isLoggedIn, taskController.updateTask.bind(taskController));
 
 export default taskRouter;

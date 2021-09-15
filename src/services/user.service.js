@@ -1,5 +1,5 @@
 import { generateSignedToken } from "../utils/helpers";
-import User from "./user.model";
+import User from "../models/user.model";
 import omit from "lodash/omit";
 import bcrypt from "bcrypt";
 

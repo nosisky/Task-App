@@ -1,12 +1,13 @@
-import TaskService from "./task.service";
-
-const taskService = new TaskService();
-
 class TaskController {
+  constructor(taskService) {
+    this.taskService = taskService;
+  }
   async getAllTask(req, res) {
     const userId = req.decoded.id;
-    return taskService
-      .getAll(userId)
+    const page = req.query.page;
+    const limit = req.query.limit;
+    return this.taskService
+      .getAll(userId, page, limit)
       .then((response) => res.status(200).json(response))
       .catch((error) => res.status(400).send({ message: error.message }));
   }
@@ -14,7 +15,7 @@ class TaskController {
   async updateTask(req, res) {
     const { id } = req.params;
     const userId = req.decoded.id;
-    return taskService
+    return this.taskService
       .update(req.body, id, userId)
       .then((response) => res.status(200).json(response))
       .catch((error) => res.status(400).send({ message: error.message }));
@@ -23,7 +24,7 @@ class TaskController {
   async createTask(req, res) {
     const userId = req.decoded.id;
     req.body.userId = userId;
-    return taskService
+    return this.taskService
       .create(req.body)
       .then((response) => res.status(200).json(response))
       .catch((error) => res.status(400).send({ message: error.message }));
@@ -33,7 +34,7 @@ class TaskController {
     const { id } = req.params;
 
     const userId = req.decoded.id;
-    return taskService
+    return this.taskService
       .remove(id, userId)
       .then((response) => {
         return res.status(200).json(response);

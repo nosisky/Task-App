@@ -1,6 +1,6 @@
 import Joi from "joi";
 import bcrypt from "bcrypt";
-import User from "../users/user.model";
+import User from "../models/user.model";
 
 /**
  * middleware

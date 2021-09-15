@@ -1,17 +1,16 @@
-import UserService from "./user.service";
-
-const userService = new UserService();
-
 class UserController {
+  constructor(userService) {
+    this.userService = userService;
+  }
   async createUser(req, res) {
-    userService
+    this.userService
       .create(req.body)
       .then((response) => res.status(200).json(response))
       .catch((error) => res.status(400).send(error.message));
   }
 
   async loginUser(req, res) {
-    userService
+    this.userService
       .loginUser({ email: req.body.email, password: req.body.password })
       .then((response) => {
         return res.status(200).json(response);

@@ -1,4 +1,4 @@
-import Task from "./task.model";
+import Task from "../models/task.model";
 
 class TaskService {
   /**
@@ -10,11 +10,19 @@ class TaskService {
    *
    * @return {Array} - returns arrays of user tasks
    */
-  async getAll(userId) {
-    const tasks = await Task.find({ userId });
+  async getAll(userId, page, limit) {
+    const paginationFilter = {
+      page: parseInt(page, 10) || 0,
+      limit: parseInt(limit, 10) || 10,
+    };
+
+    const tasks = await Task.find({ userId })
+      .skip(paginationFilter.page * paginationFilter.limit)
+      .limit(paginationFilter.limit)
+      .exec();
 
     if (tasks.length > 0) {
-      return { tasks };
+      return { tasks, pagination: paginationFilter };
     } else {
       throw new Error("There are no task in the database");
     }
