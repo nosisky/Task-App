@@ -8,8 +8,6 @@
 - [Technologies](#technology)
 - [Installation and Setup](#installation)
 - [How to Contribute](#how-to-contribute)
-- [Frequently Asked Questions](#faqs)
-- [Support or New Features](#support-or-new-features)
 - [License](#license)
 - [TODO](#todo)
 
@@ -45,15 +43,15 @@ Task App consists of the following features:
 
 ## Installation
 
-> Git clone this repository
+- Git clone this repository
 
-> CD to the created directory
+- CD to the created directory
 
-> Rename .env.example file to .env and fill in your DB credentials and other available configuration like API_KEY_SECRET for JWT
+- Rename .env.example file to .env and fill in your DB credentials and other available configuration like API_KEY_SECRET for JWT
 
-> run `npm install`
+- run `npm install`
 
-> run `npm run start:dev` to start server
+- run `npm run start:dev` to start server
 
 ## API Routes
 
