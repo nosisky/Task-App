@@ -4,6 +4,15 @@ import omit from "lodash/omit";
 import bcrypt from "bcrypt";
 
 class UserService {
+  /**
+   * @description Creates a new user
+   *
+   * @param {Object} req - request
+   *
+   * @param {Object} res - response
+   *
+   * @return {Object} - returns newly created user with authentication token
+   */
   async create(userObject) {
     try {
       const newUser = new User({
@@ -29,6 +38,15 @@ class UserService {
     }
   }
 
+  /**
+   * @description Authenticates a user
+   *
+   * @param {Object} req - request
+   *
+   * @param {Object} res - response
+   *
+   * @return {Object} - returns success mesage and authentication token
+   */
   async loginUser(loginRequest) {
     if (!loginRequest.email || !loginRequest.password) {
       throw new Error("Please provide your email or password to login");

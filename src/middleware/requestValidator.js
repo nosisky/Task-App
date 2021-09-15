@@ -2,6 +2,15 @@ import Joi from "joi";
 import bcrypt from "bcrypt";
 import User from "../users/user.model";
 
+/**
+ * middleware
+ * @description Validates create task
+ *
+ * @param {Object} req - request
+ *
+ * @param {Object} res - response
+ *
+ */
 export const validateCreateTask = async (req, res, next) => {
   const schema = Joi.object({
     title: Joi.string().min(3).max(50).required(),
@@ -28,6 +37,15 @@ export const validateCreateTask = async (req, res, next) => {
   }
 };
 
+/**
+ * middleware
+ * @description Validates create user object
+ *
+ * @param {Object} req - request
+ *
+ * @param {Object} res - response
+ *
+ */
 export const validateCreateUser = async (req, res, next) => {
   const schema = Joi.object({
     name: Joi.string().min(3).max(30).required(),
@@ -52,6 +70,15 @@ export const validateCreateUser = async (req, res, next) => {
   }
 };
 
+/**
+ * middleware
+ * @description Sends validated user input to the controller method
+ *
+ * @param {Object} req - request
+ *
+ * @param {Object} res - response
+ *
+ */
 const sendUserInput = async (req, res, next) => {
   const email = req.body.email.toLowerCase();
 

@@ -5,6 +5,17 @@ dotenv.config();
 
 const key = process.env.API_KEY_SECRET;
 
+/**
+ * Middleware
+ *
+ * @description Checks if  user is logged in using the authentication token
+ *
+ * @param {Object} req - request
+ *
+ * @param {Object} res - response
+ *
+ * @return {void} - attaches decoded token object to request object
+ */
 export const isLoggedIn = (req, res, next) => {
   let token;
   const tokenAvailable =

@@ -2,6 +2,15 @@ import Q from "q";
 import Task from "./task.model";
 
 class TaskService {
+  /**
+   * @description Retrieves all tasks belonging to a user
+   *
+   * @param {Object} req - request
+   *
+   * @param {Object} res - response
+   *
+   * @return {Array} - returns arrays of user tasks
+   */
   async getAll(userId) {
     const tasks = await Task.find({ userId });
 
@@ -12,6 +21,15 @@ class TaskService {
     }
   }
 
+  /**
+   * @description Updates a user task
+   *
+   * @param {Object} req - request
+   *
+   * @param {Object} res - response
+   *
+   * @return {Object} - returns a success response of the updated task
+   */
   async update(updateRequest, id, userId) {
     try {
       const updatedTask = await Task.findOneAndUpdate(
@@ -31,6 +49,15 @@ class TaskService {
     }
   }
 
+  /**
+   * @description Creates a new task
+   *
+   * @param {Object} req - request
+   *
+   * @param {Object} res - response
+   *
+   * @return {Object} - returns newly created task
+   */
   async create(taskRequest) {
     const newTask = new Task(taskRequest);
 
@@ -46,6 +73,15 @@ class TaskService {
     }
   }
 
+  /**
+   * @description Deletes a task
+   *
+   * @param {Object} req - request
+   *
+   * @param {Object} res - response
+   *
+   * @return {Object} - returns success response
+   */
   async remove(id, userId) {
     try {
       const task = await Task.findOneAndRemove({ _id: id, userId });
