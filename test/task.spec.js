@@ -70,13 +70,11 @@ describe("Task", () => {
           res.body.should.have
             .property("message")
             .eql("Task created successfully");
-          res.body.should.have
-            .property("createdTask")
-            .property("title")
+          res.body.should.have.nested
+            .property("createdTask.title")
             .eql(payload.title);
-          res.body.should.have
-            .property("createdTask")
-            .property("description")
+          res.body.should.have.nested
+            .property("createdTask.description")
             .eql(payload.description);
           done();
         });
