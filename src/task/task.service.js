@@ -1,64 +1,65 @@
 import Q from "q";
-import Todo from "./task.model";
+import Task from "./task.model";
 
-export default {
-  getAll,
-  update,
-  create,
-  remove,
-};
+class TaskService {
+  async getAll(userId) {
+    const tasks = await Task.find({ userId });
 
-function getAll() {
-  const deferred = Q.defer();
-
-  Todo.find({}, (err, todos) => {
-    if (err) deferred.reject(err);
-    deferred.resolve(todos);
-  });
-
-  return deferred.promise;
-}
-
-function update(id, name, completed) {
-  const deferred = Q.defer();
-  const query = {};
-
-  if (name) query.name = name;
-  if (completed) query.completed = completed;
-
-  if (Object.keys(query).length > 0) {
-    Todo.update({ _id: id }, { $set: query }, (err, todo) => {
-      if (err) deferred.reject(err);
-
-      deferred.resolve(todo);
-    });
-  } else {
-    // reject promise if name and completed information is missing
-    deferred.reject({});
+    if (tasks.length > 0) {
+      return { tasks };
+    } else {
+      throw new Error("There are no task in the database");
+    }
   }
 
-  return deferred.promise;
+  async update(updateRequest, id, userId) {
+    try {
+      const updatedTask = await Task.findOneAndUpdate(
+        { _id: id, userId },
+        { $set: updateRequest }
+      );
+
+      if (updatedTask) {
+        return {
+          message: "Task updated successfully",
+        };
+      } else {
+        throw new Error("Invalid task id supplied");
+      }
+    } catch (error) {
+      throw new Error("Failed to update");
+    }
+  }
+
+  async create(taskRequest) {
+    const newTask = new Task(taskRequest);
+
+    try {
+      const createdTask = await newTask.save();
+
+      return {
+        message: "Task created successfully",
+        createdTask,
+      };
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  async remove(id, userId) {
+    try {
+      const task = await Task.findOneAndRemove({ _id: id, userId });
+
+      if (task) {
+        return {
+          message: "Task successfully deleted",
+        };
+      } else {
+        throw new Error("Error occured, task ID is invalid");
+      }
+    } catch (error) {
+      throw new Error("Invalid task id supplied");
+    }
+  }
 }
-
-function create(name) {
-  const deferred = Q.defer();
-  const todo = new Todo({ name });
-  todo.save((err, savedTodo) => {
-    if (err) deferred.reject(err);
-
-    deferred.resolve(savedTodo);
-  });
-
-  return deferred.promise;
-}
-
-function remove(id) {
-  const deferred = Q.defer();
-  Todo.remove({ _id: id }, (err, todo) => {
-    if (err) deferred.reject(err);
-
-    deferred.resolve(todo);
-  });
-
-  return deferred.promise;
-}
+export default TaskService;

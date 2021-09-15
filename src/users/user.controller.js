@@ -1,35 +1,24 @@
-import TodoDa from "./task.service";
+import UserService from "./user.service";
+
+const userService = new UserService();
 
 class UserController {
-  async getAllTask(req, res) {
-    TodoDa.getAll()
-      .then((todos) => res.status(200).json(todos))
-      .catch(() => res.sendStatus(422));
+  async createUser(req, res) {
+    userService
+      .create(req.body)
+      .then((response) => res.status(200).json(response))
+      .catch((error) => res.status(400).send(error.message));
   }
 
-  async updateTask(req, res) {
-    const { id } = req.params;
-    const { name, completed } = req.body;
-
-    TodoDa.update(id, name, completed)
-      .then(() => res.sendStatus(200))
-      .catch(() => res.sendStatus(422));
-  }
-
-  async createTask(req, res) {
-    const { name } = req.body;
-
-    TodoDa.create(name)
-      .then((todo) => res.status(200).json(todo))
-      .catch(() => res.sendStatus(422));
-  }
-
-  async deleteTask(req, res) {
-    const { id } = req.params;
-
-    TodoDa.remove(id)
-      .then(() => res.sendStatus(200))
-      .catch(() => res.sendStatus(422));
+  async loginUser(req, res) {
+    userService
+      .loginUser({ email: req.body.email, password: req.body.password })
+      .then((response) => {
+        return res.status(200).json(response);
+      })
+      .catch((error) => {
+        return res.status(400).send({ message: error.message });
+      });
   }
 }
 export default UserController;

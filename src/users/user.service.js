@@ -1,11 +1,14 @@
 import Q from "q";
-import Todo from "./user.model";
+import { generateSignedToken } from "../utils/helpers";
+import User from "./user.model";
+import omit from "lodash/omit";
+import bcrypt from "bcrypt";
 
 class UserService {
   async getAll() {
     const deferred = Q.defer();
 
-    Todo.find({}, (err, todos) => {
+    User.find({}, (err, todos) => {
       if (err) deferred.reject(err);
       deferred.resolve(todos);
     });
@@ -21,7 +24,7 @@ class UserService {
     if (completed) query.completed = completed;
 
     if (Object.keys(query).length > 0) {
-      Todo.update({ _id: id }, { $set: query }, (err, todo) => {
+      User.update({ _id: id }, { $set: query }, (err, todo) => {
         if (err) deferred.reject(err);
 
         deferred.resolve(todo);
@@ -34,27 +37,58 @@ class UserService {
     return deferred.promise;
   }
 
-  async create(name) {
-    const deferred = Q.defer();
-    const todo = new Todo({ name });
-    todo.save((err, savedTodo) => {
-      if (err) deferred.reject(err);
+  async create(userObject) {
+    try {
+      const newUser = new User({
+        name: userObject.name,
+        email: userObject.email,
+        password: userObject.password,
+      });
+      const createdUser = await newUser.save();
+      const userResponse = {
+        id: createdUser.id,
+        name: createdUser.name,
+        email: createdUser.email,
+      };
 
-      deferred.resolve(savedTodo);
-    });
-
-    return deferred.promise;
+      const token = generateSignedToken(userResponse);
+      return {
+        message: "User created successfully",
+        data: userResponse,
+        token,
+      };
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
-  async remove(id) {
-    const deferred = Q.defer();
-    Todo.remove({ _id: id }, (err, todo) => {
-      if (err) deferred.reject(err);
+  async loginUser(loginRequest) {
+    if (!loginRequest.email || !loginRequest.password) {
+      throw new Error("Please provide your email or password to login");
+    }
 
-      deferred.resolve(todo);
-    });
+    const email = loginRequest.email.toLowerCase();
 
-    return deferred.promise;
+    return User.findOne({
+      email,
+    })
+      .then((user) => {
+        if (user && bcrypt.compareSync(loginRequest.password, user.password)) {
+          const currentUser = omit(user.toObject(), [
+            "password",
+            "createdDate",
+          ]);
+          const token = generateSignedToken(currentUser);
+          return {
+            message: "Logged In Successfully",
+            token,
+          };
+        }
+        return {
+          message: "Invalid Credentials.",
+        };
+      })
+      .catch((error) => error);
   }
 }
 

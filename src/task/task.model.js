@@ -1,18 +1,34 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const TodoSchema = new mongoose.Schema({
-  name: {
+const TaskSchema = new mongoose.Schema({
+  title: {
     type: String,
-    required: true
+    required: true,
   },
-  completed: {
+  description: {
+    type: String,
+    required: true,
+  },
+  userId: {
+    type: String,
+    required: true,
+  },
+  isCompleted: {
     type: Boolean,
-    default: false
+    default: false,
+  },
+  deadline: {
+    type: Date,
+    required: true,
+  },
+  reminderTime: {
+    type: Date,
+    required: true,
   },
   created: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-export default mongoose.model('Todo', TodoSchema);
+export default mongoose.model("Task", TaskSchema);

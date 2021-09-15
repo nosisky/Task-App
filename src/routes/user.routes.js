@@ -1,12 +1,13 @@
-import todoApi from "../task";
-import packageJson from "../../package.json";
+import express from "express";
+import { validateCreateUser } from "../middleware/requestValidator";
 
-app.use(API_V1, todoApi);
+import UserController from "../users/user.controller";
+
+const userController = new UserController();
 
 const userRouter = express.Router();
 
-userRouter.route("/todo").get(ctrl.getAll).post(ctrl.create);
-
-userRouter.route("/todo/:id").delete(ctrl.remove).put(ctrl.update);
+userRouter.post("/", validateCreateUser, userController.createUser);
+userRouter.post("/login", userController.loginUser);
 
 export default userRouter;

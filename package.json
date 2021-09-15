@@ -11,9 +11,14 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.18.3",
+    "dotenv": "^10.0.0",
     "express": "^4.16.3",
-    "mongoose": "^5.2.7",
+    "joi": "^17.4.2",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.0.5",
     "morgan": "^1.9.0",
     "q": "^1.5.1"
   },
@@ -31,7 +36,7 @@
     "nodemon": "^1.18.3"
   },
   "scripts": {
-    "start:dev": "NODE_ENV=dev nodemon server.js --exec \"npm run lint -s && babel-node\"",
+    "start:dev": "NODE_ENV=development nodemon server.js --exec \"babel-node\"",
     "build": "babel src --out-dir build",
     "lint": "./node_modules/.bin/eslint src",
     "test": "NODE_ENV=test mocha --exit --timeout 30000 --compilers js:babel-register",

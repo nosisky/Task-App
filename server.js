@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import morgan from "morgan";
-import config from "./src/config/config";
+import config from "./src/config";
 import taskRoutes from "./src/routes/task.routes";
 import userRoutes from "./src/routes/user.routes";
 
@@ -10,6 +10,7 @@ class Server {
     this.app = express();
     this.config = config;
     this.database = this.config.db;
+    this.port = this.config.apiPort;
 
     this.init();
   }
@@ -27,14 +28,18 @@ class Server {
           console.log(`[MongoDB] connected: ${this.config.db}`);
 
           // initialize routes
-          this.app.use("/api/v1/task", taskRoutes);
           this.app.use("/api/v1/user", userRoutes);
-
+          this.app.use("/api/v1/task", taskRoutes);
+          this.app.use("*", (req, res) => {
+            res.status(404).send({
+              message: "Unknown route",
+            });
+          });
           this.app.listen(this.port, () => {
-            console.info(`=================================`);
+            console.info("=================================");
             console.info(`======= ENV: ${this.config.env} =======`);
             console.info(`🚀 App listening on the port ${this.config.apiPort}`);
-            console.info(`=================================`);
+            console.info("=================================");
           });
         }
       });
