@@ -18,7 +18,6 @@
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
-    "mongodb-memory-server": "^7.4.0",
     "mongoose": "^6.0.5",
     "morgan": "^1.9.0"
   },
@@ -32,7 +31,7 @@
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-plugin-import": "^2.13.0",
     "mocha": "^5.2.0",
-    "mockgoose": "^7.3.5",
+    "mongodb-memory-server": "^7.4.0",
     "nodemon": "^1.18.3"
   },
   "scripts": {

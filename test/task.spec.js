@@ -5,9 +5,7 @@ import server from "../server";
 import { MongoMemoryServer } from "mongodb-memory-server";
 
 let mongoServer;
-const opts = { useMongoClient: true };
 
-// const server = new Server();
 chai.should();
 chai.use(chaiHttp);
 let token;

@@ -1,4 +1,3 @@
-import Q from "q";
 import Task from "./task.model";
 
 class TaskService {
