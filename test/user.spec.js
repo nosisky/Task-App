@@ -67,7 +67,7 @@ describe("Users", () => {
       chai
         .request(server)
         .post("/api/v1/user/login")
-        .send({ email: "foo@bar.com", password: "fakepassword" })
+        .send({ email: "foo@bar.com", password: "randompassword" })
         .end(function (err, res) {
           res.body.should.have.property("message").eql("Invalid Credentials.");
         });
