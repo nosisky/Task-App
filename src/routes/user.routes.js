@@ -7,7 +7,7 @@ const userController = new UserController();
 
 const userRouter = express.Router();
 
-userRouter.post("/", validateCreateUser, userController.createUser);
+userRouter.post("/signup", validateCreateUser, userController.createUser);
 userRouter.post("/login", userController.loginUser);
 
 export default userRouter;

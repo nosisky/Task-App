@@ -31,7 +31,7 @@ describe("Users", () => {
     it("it should fail to create user when email is invalid", (done) => {
       chai
         .request(server)
-        .post("/api/v1/user")
+        .post("/api/v1/user/signup")
         .send({
           name: "test",
           email: "invalid email .com",
@@ -50,7 +50,7 @@ describe("Users", () => {
     it("it should successfully create user when input is valid", (done) => {
       chai
         .request(server)
-        .post("/api/v1/user")
+        .post("/api/v1/user/signup")
         .send(validUserPayload)
         .end(function (err, res) {
           res.body.should.have

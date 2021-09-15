@@ -19,7 +19,7 @@ before(async () => {
 
   chai
     .request(server)
-    .post("/api/v1/user")
+    .post("/api/v1/user/signup")
     .send({
       name: "test",
       email: "test@test.com",
