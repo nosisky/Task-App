@@ -4,12 +4,14 @@ import morgan from "morgan";
 import config from "./src/config";
 import taskRoutes from "./src/routes/task.routes";
 import userRoutes from "./src/routes/user.routes";
+import dotenv from "dotenv";
+dotenv.config();
 
 class Server {
   constructor() {
     this.app = express();
     this.config = config;
-    this.database = this.config.db;
+    this.database = process.env.MONGO_DB_URL;
     this.port = this.config.apiPort;
 
     this.init();

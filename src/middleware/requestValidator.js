@@ -15,7 +15,7 @@ export const validateCreateTask = async (req, res, next) => {
   const schema = Joi.object({
     title: Joi.string().min(3).max(50).required(),
 
-    description: Joi.string().alphanum().min(3).max(100).required(),
+    description: Joi.string().min(3).max(100).required(),
 
     deadline: Joi.date().required(),
 
@@ -26,7 +26,7 @@ export const validateCreateTask = async (req, res, next) => {
     const value = await schema.validateAsync(req.body);
 
     req.body = value;
-    req.body.userId = req.decoded._id;
+    req.body.userId = req.decoded.id;
     next();
   } catch (err) {
     const errorResponse = err.details.map((error) =>

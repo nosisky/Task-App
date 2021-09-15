@@ -63,7 +63,13 @@ class UserService {
             "password",
             "createdDate",
           ]);
-          const token = generateSignedToken(currentUser);
+
+          const currentUserResponse = {
+            id: currentUser.id,
+            name: currentUser.name,
+            email: currentUser.email,
+          };
+          const token = generateSignedToken(currentUserResponse);
           return {
             message: "Logged In Successfully",
             token,

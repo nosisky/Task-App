@@ -4,7 +4,7 @@ const taskService = new TaskService();
 
 class TaskController {
   async getAllTask(req, res) {
-    const userId = req.decoded._id;
+    const userId = req.decoded.id;
     return taskService
       .getAll(userId)
       .then((response) => res.status(200).json(response))
@@ -13,7 +13,7 @@ class TaskController {
 
   async updateTask(req, res) {
     const { id } = req.params;
-    const userId = req.decoded._id;
+    const userId = req.decoded.id;
     return taskService
       .update(req.body, id, userId)
       .then((response) => res.status(200).json(response))
@@ -21,6 +21,8 @@ class TaskController {
   }
 
   async createTask(req, res) {
+    const userId = req.decoded.id;
+    req.body.userId = userId;
     return taskService
       .create(req.body)
       .then((response) => res.status(200).json(response))
@@ -30,7 +32,7 @@ class TaskController {
   async deleteTask(req, res) {
     const { id } = req.params;
 
-    const userId = req.decoded._id;
+    const userId = req.decoded.id;
     return taskService
       .remove(id, userId)
       .then((response) => {
