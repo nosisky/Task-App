@@ -52,6 +52,7 @@ class TaskService {
         throw new Error("Invalid task id supplied");
       }
     } catch (error) {
+      console.log(error);
       throw new Error("Failed to update");
     }
   }

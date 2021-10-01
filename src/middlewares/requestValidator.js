@@ -26,7 +26,8 @@ export const validateCreateTask = async (req, res, next) => {
     const value = await schema.validateAsync(req.body);
 
     req.body = value;
-    req.body.userId = req.decoded.id;
+    req.body.userId = req.decoded.userId;
+
     next();
   } catch (err) {
     const errorResponse = err.details.map((error) =>

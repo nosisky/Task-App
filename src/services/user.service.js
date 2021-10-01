@@ -65,7 +65,7 @@ class UserService {
           ]);
 
           const currentUserResponse = {
-            id: currentUser.id,
+            id: currentUser._id,
             name: currentUser.name,
             email: currentUser.email,
           };
