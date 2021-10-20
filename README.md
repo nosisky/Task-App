@@ -1,4 +1,4 @@
-# Task App
+# Task Management App
 
 ### Task App is a simple task management system where a user can set a reminder for a specific task.
 
